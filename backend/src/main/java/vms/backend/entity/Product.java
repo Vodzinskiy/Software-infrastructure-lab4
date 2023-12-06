@@ -1,6 +1,7 @@
 package vms.backend.entity;
 
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Getter;
@@ -15,21 +16,22 @@ import java.util.UUID;
 public class Product {
 
     @Id
-    @GeneratedValue
-    @UuidGenerator
     private UUID id;
 
     private String title;
 
     private int price;
 
+    private UUID retailer;
+
     public Product() {
     }
 
-    public Product(UUID id, String title, int price) {
+    public Product(UUID  id, String title, int price, UUID retailer) {
         this.id = id;
         this.title = title;
         this.price = price;
+        this.retailer = retailer;
     }
 
 }

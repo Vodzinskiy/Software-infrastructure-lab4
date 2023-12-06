@@ -1,6 +1,7 @@
 package vms.backend.entity;
 
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
@@ -18,8 +19,7 @@ import java.util.UUID;
 public class Order {
 
     @Id
-    @GeneratedValue
-    @UuidGenerator
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String fullName;
@@ -34,8 +34,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(UUID id, String fullName, LocalDate birthDate, String address, List<Product> products) {
-        this.id = id;
+    public Order(String fullName, LocalDate birthDate, String address, List<Product> products) {
         this.fullName = fullName;
         this.birthDate = birthDate;
         this.address = address;
