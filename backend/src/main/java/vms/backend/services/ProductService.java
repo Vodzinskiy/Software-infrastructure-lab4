@@ -3,9 +3,12 @@ package vms.backend.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vms.backend.entity.Product;
+import vms.backend.exception.NotFoundException;
 import vms.backend.repository.ProductRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,4 +29,13 @@ public class ProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
+    public Product getByID(UUID uuid) {
+        Optional<Product> product = productRepository.findById(uuid);
+        if (product.isEmpty()) {
+            throw new NotFoundException("Product with id " + uuid + " not found");
+        }
+        return product.get();
+    }
+
 }
