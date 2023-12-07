@@ -55,4 +55,8 @@ public class ProductService {
         }
         return productRepository.save(product);
     }
+
+    public List<Product> getAllByRetailer(UUID id) {
+        return productRepository.findAllByRetailer(id);
+    }
 }

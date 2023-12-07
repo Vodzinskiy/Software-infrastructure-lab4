@@ -1,10 +1,7 @@
 package vms.backend.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,7 +16,6 @@ import java.util.UUID;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String fullName;
@@ -28,13 +24,14 @@ public class Order {
 
     private String address;
 
-    @DBRef
+    @DBRef(lazy = true)
     private List<Product> products;
 
     public Order() {
     }
 
-    public Order(String fullName, LocalDate birthDate, String address, List<Product> products) {
+    public Order(UUID id, String fullName, LocalDate birthDate, String address, List<Product> products) {
+        this.id = id;
         this.fullName = fullName;
         this.birthDate = birthDate;
         this.address = address;
