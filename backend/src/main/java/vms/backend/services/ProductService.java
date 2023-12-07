@@ -7,7 +7,6 @@ import vms.backend.exception.NotFoundException;
 import vms.backend.repository.ProductRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,10 +19,10 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product createProduct(String title, int price, UUID retailer) {
-        Product product = new Product(UUID.randomUUID(), title, price, retailer);
-        productRepository.save(product);
-        return product;
+    public Product createProduct(Product product) {
+        Product newProduct = new Product(UUID.randomUUID(), product.getTitle(), product.getPrice(), product.getRetailer());
+        productRepository.save(newProduct);
+        return newProduct;
     }
 
     public List<Product> getAllProducts() {
@@ -38,4 +37,22 @@ public class ProductService {
         return product.get();
     }
 
+    public void deleteByID(UUID id) {
+        getByID(id);
+        productRepository.deleteById(id);
+    }
+
+    public Product editByID(UUID id, Product update) {
+        Product product = getByID(id);
+        if(update.getTitle() != null) {
+            product.setTitle(update.getTitle());
+        }
+        if(update.getPrice() != null) {
+            product.setPrice(update.getPrice());
+        }
+        if(update.getRetailer() != null) {
+            product.setRetailer(update.getRetailer());
+        }
+        return productRepository.save(product);
+    }
 }

@@ -20,14 +20,14 @@ public class Product {
 
     private String title;
 
-    private int price;
+    private Integer price;
 
     private UUID retailer;
 
     public Product() {
     }
 
-    public Product(UUID  id, String title, int price, UUID retailer) {
+    public Product(UUID  id, String title, Integer price, UUID retailer) {
         this.id = id;
         this.title = title;
         this.price = price;
