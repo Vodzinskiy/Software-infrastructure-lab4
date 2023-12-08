@@ -43,7 +43,13 @@ public class RetailerController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteByID() {
+    public void deleteByID(@CookieValue("jwtToken") String jwtToken) {
+        retailerService.deleteByID(jwtToken);
+    }
 
+    @PatchMapping
+    public ResponseEntity<Retailer> editRetailer(@RequestBody Retailer retailer,
+                                                 @CookieValue("jwtToken") String jwtToken) {
+        return ResponseEntity.ok(retailerService.editRetailer(retailer, jwtToken));
     }
 }

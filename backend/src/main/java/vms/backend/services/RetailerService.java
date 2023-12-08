@@ -74,16 +74,30 @@ public class RetailerService {
         return retailer.get();
     }
 
-    public Retailer getByEmail(String email) {
-        Optional<Retailer> retailer = retailerRepository.findByEmail(email);
-        if (retailer.isEmpty()) {
-            throw new NotFoundException("Retailer with email " + email + " not found");
-        }
-        return retailer.get();
-    }
 
-    public void deleteByID(UUID id) {
+    public void deleteByID(String jwt) {
+        UUID id = jwtService.jwtToUUID(jwt);
         getByID(id);
         retailerRepository.deleteById(id);
+    }
+
+    public Retailer editRetailer(Retailer update, String jwt) {
+        Retailer retailer = getByID(jwtService.jwtToUUID(jwt));
+        if(update.getFullName() != null) {
+            retailer.setFullName(update.getFullName());
+        }
+        if(update.getEmail() != null) {
+            retailer.setEmail(update.getEmail());
+        }
+        if(update.getSex() != null) {
+            retailer.setSex(update.getSex());
+        }
+        if(update.getBirthDate() != null) {
+            retailer.setBirthDate(update.getBirthDate());
+        }
+        if(update.getPassword() != null) {
+            retailer.setPassword(encoder.encode(update.getPassword()));
+        }
+        return retailerRepository.save(retailer);
     }
 }

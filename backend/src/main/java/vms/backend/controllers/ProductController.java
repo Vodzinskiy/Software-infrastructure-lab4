@@ -46,7 +46,4 @@ public class ProductController {
                                             @RequestBody Product product) {
         return ResponseEntity.ok(productService.editByID(id, product));
     }
-
-
-
 }

@@ -4,7 +4,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import vms.backend.entity.Retailer;
 import vms.backend.security.UserDetailsImpl;
 
 import java.util.Date;

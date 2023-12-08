@@ -27,9 +27,6 @@ public class Order {
     @DBRef(lazy = true)
     private List<Product> products;
 
-    public Order() {
-    }
-
     public Order(UUID id, String fullName, LocalDate birthDate, String address, List<Product> products) {
         this.id = id;
         this.fullName = fullName;
