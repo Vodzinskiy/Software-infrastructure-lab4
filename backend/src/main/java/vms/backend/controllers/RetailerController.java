@@ -1,5 +1,6 @@
 package vms.backend.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +33,17 @@ public class RetailerController {
     @PostMapping("/signup")
     public ResponseEntity<Retailer> registerRetailer(@RequestBody Retailer retailer) {
         return ResponseEntity.status(HttpStatus.CREATED).body(retailerService.createRetailer(retailer));
+    }
+
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    public void login(@RequestBody Retailer retailer, HttpServletResponse response) {
+        retailerService.login(retailer, response);
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteByID() {
+
     }
 }
