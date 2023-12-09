@@ -64,9 +64,9 @@ public class ProductService {
         if(update.getPrice() != null) {
             product.setPrice(update.getPrice());
         }
-        if(update.getRetailer() != null) {
+        /*if(update.getRetailer() != null) {
             product.setRetailer(update.getRetailer());
-        }
+        }*/
         return productRepository.save(product);
     }
 

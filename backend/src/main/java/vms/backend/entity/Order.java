@@ -1,9 +1,9 @@
 package vms.backend.entity;
 
+import jakarta.persistence.Embedded;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -24,10 +24,10 @@ public class Order {
 
     private String address;
 
-    @DBRef(lazy = true)
-    private List<Product> products;
+    @Embedded
+    private List<OrderItem> products;
 
-    public Order(UUID id, String fullName, LocalDate birthDate, String address, List<Product> products) {
+    public Order(UUID id, String fullName, LocalDate birthDate, String address, List<OrderItem> products) {
         this.id = id;
         this.fullName = fullName;
         this.birthDate = birthDate;

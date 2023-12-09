@@ -27,8 +27,8 @@ public class OrderService {
 
     public Order createOrder(Order order) {
         order.getProducts().forEach(product -> {
-            if (!productRepository.existsById(product.getId())) {
-                throw new NotFoundException("Product with id " + product.getId() + " not found");
+            if (!productRepository.existsById(product.getProduct().getId())) {
+                throw new NotFoundException("Product with id " + product.getProduct().getId() + " not found");
             }
         });
 
@@ -47,12 +47,12 @@ public class OrderService {
                 .filter(order ->
                         order.getProducts().stream()
                                 .anyMatch(product ->
-                                        id.equals(product.getRetailer()))
+                                        id.equals(product.getProduct().getRetailerID()))
                 )
                 .peek(order -> order.setProducts(
                         order.getProducts().stream()
                                 .filter(product ->
-                                        id.equals(product.getRetailer()))
+                                        id.equals(product.getProduct().getRetailerID()))
                                 .collect(Collectors.toList())))
                 .collect(Collectors.toList());
     }

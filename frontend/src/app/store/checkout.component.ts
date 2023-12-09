@@ -18,6 +18,7 @@ export class CheckoutComponent {
   submitOrder(form: NgForm) {
     this.submitted = true;
     if (form.valid) {
+      console.log(JSON.stringify(this.order));
       this.repository.saveOrder(this.order).subscribe(order => {
         this.order.clear();
         this.orderSent = true;

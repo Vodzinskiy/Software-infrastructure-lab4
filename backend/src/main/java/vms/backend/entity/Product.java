@@ -1,5 +1,6 @@
 package vms.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Document(collection = "products")
 @Getter
 @Setter
+@JsonIgnoreProperties({"target", "source"})
 public class Product {
 
     @Id
