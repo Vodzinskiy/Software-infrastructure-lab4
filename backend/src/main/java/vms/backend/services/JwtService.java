@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import vms.backend.security.UserDetailsImpl;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Component
@@ -17,9 +19,13 @@ public class JwtService {
     public String generateJwtToken(Authentication authentication) {
         Object principal = authentication.getPrincipal();
         if (principal instanceof UserDetailsImpl userPrincipal) {
-            return Jwts.builder().setSubject(userPrincipal.getUsername())
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("name", userPrincipal.getName());
+            return Jwts.builder()
+                    .setSubject(userPrincipal.getUsername())
                     .setId(userPrincipal.getId().toString())
                     .setIssuedAt(new Date())
+                    .addClaims(claims)
                     .setExpiration(new Date((new Date()).getTime() + 86400000))
                     .signWith(SignatureAlgorithm.HS512, jwtSecret)
                     .compact();
@@ -30,6 +36,10 @@ public class JwtService {
 
     public String getEmailFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public String getNameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().get("name").toString();
     }
 
     public String getUserIDFromJwtToken(String token) {

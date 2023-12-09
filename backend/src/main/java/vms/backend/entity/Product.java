@@ -19,12 +19,15 @@ public class Product {
 
     private Integer price;
 
-    private UUID retailer;
+    private UUID retailerID;
 
-    public Product(UUID  id, String title, Integer price, UUID retailer) {
+    private String retailer;
+
+    public Product(UUID  id, String title, Integer price, UUID retailerID, String retailer) {
         this.id = id;
         this.title = title;
         this.price = price;
+        this.retailerID = retailerID;
         this.retailer = retailer;
     }
 }

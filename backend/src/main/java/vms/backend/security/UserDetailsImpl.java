@@ -19,15 +19,19 @@ public class UserDetailsImpl implements UserDetails {
 
     private final String email;
 
+    @Getter
+    private final String name;
+
     @JsonIgnore
     private String password;
 
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(UUID id, String email, String password,
+    public UserDetailsImpl(UUID id, String email, String name, String password,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
+        this.name = name;
         this.password = password;
         this.authorities = authorities;
     }
@@ -39,8 +43,8 @@ public class UserDetailsImpl implements UserDetails {
         return new UserDetailsImpl(
                 retailer.getId(),
                 retailer.getEmail(),
-                retailer.getPassword(),
-                authorities);
+                retailer.getFullName(),
+                retailer.getPassword(), authorities);
     }
 
     @Override

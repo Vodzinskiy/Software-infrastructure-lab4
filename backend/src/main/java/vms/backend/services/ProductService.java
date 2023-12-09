@@ -24,7 +24,11 @@ public class ProductService {
     }
 
     public Product createProduct(Product product, String jwt) {
-        Product newProduct = new Product(UUID.randomUUID(), product.getTitle(), product.getPrice(), jwtService.jwtToUUID(jwt));
+        Product newProduct = new Product(UUID.randomUUID(),
+                product.getTitle(),
+                product.getPrice(),
+                jwtService.jwtToUUID(jwt),
+                jwtService.getNameFromJwtToken(jwt));
         productRepository.save(newProduct);
         return newProduct;
     }
@@ -43,7 +47,7 @@ public class ProductService {
 
     public void deleteByID(UUID id, String jwt) {
         Product product = getByID(id);
-        if (product.getRetailer() != jwtService.jwtToUUID(jwt)) {
+        if (product.getRetailerID() != jwtService.jwtToUUID(jwt)) {
             throw new ForbiddenException("You are not the owner of this product!");
         }
         productRepository.deleteById(id);
@@ -51,7 +55,7 @@ public class ProductService {
 
     public Product editByID(UUID id, Product update, String jwt) {
         Product product = getByID(id);
-        if (product.getRetailer() != jwtService.jwtToUUID(jwt)) {
+        if (product.getRetailerID() != jwtService.jwtToUUID(jwt)) {
             throw new ForbiddenException("You are not the owner of this product!");
         }
         if(update.getTitle() != null) {
