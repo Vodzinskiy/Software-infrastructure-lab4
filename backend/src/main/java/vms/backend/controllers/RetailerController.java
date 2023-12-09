@@ -11,7 +11,6 @@ import vms.backend.services.ProductService;
 import vms.backend.services.RetailerService;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/retailer")
@@ -25,9 +24,9 @@ public class RetailerController {
         this.retailerService = retailerService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<Product>> getAllProduct(@PathVariable UUID id) {
-        return ResponseEntity.ok(productService.getAllByRetailer(id));
+    @GetMapping
+    public ResponseEntity<List<Product>> getAllProduct(@CookieValue("jwtToken") String jwtToken) {
+        return ResponseEntity.ok(productService.getAllByRetailer(jwtToken));
     }
 
     @PostMapping("/signup")

@@ -3,6 +3,7 @@ package vms.backend.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vms.backend.entity.Product;
+import vms.backend.exception.ForbiddenException;
 import vms.backend.exception.NotFoundException;
 import vms.backend.repository.ProductRepository;
 
@@ -14,13 +15,16 @@ import java.util.UUID;
 public class ProductService {
     private final ProductRepository productRepository;
 
+    private final JwtService jwtService;
+
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, JwtService jwtService) {
         this.productRepository = productRepository;
+        this.jwtService = jwtService;
     }
 
-    public Product createProduct(Product product) {
-        Product newProduct = new Product(UUID.randomUUID(), product.getTitle(), product.getPrice(), product.getRetailer());
+    public Product createProduct(Product product, String jwt) {
+        Product newProduct = new Product(UUID.randomUUID(), product.getTitle(), product.getPrice(), jwtService.jwtToUUID(jwt));
         productRepository.save(newProduct);
         return newProduct;
     }
@@ -37,13 +41,19 @@ public class ProductService {
         return product.get();
     }
 
-    public void deleteByID(UUID id) {
-        getByID(id);
+    public void deleteByID(UUID id, String jwt) {
+        Product product = getByID(id);
+        if (product.getRetailer() != jwtService.jwtToUUID(jwt)) {
+            throw new ForbiddenException("You are not the owner of this product!");
+        }
         productRepository.deleteById(id);
     }
 
-    public Product editByID(UUID id, Product update) {
+    public Product editByID(UUID id, Product update, String jwt) {
         Product product = getByID(id);
+        if (product.getRetailer() != jwtService.jwtToUUID(jwt)) {
+            throw new ForbiddenException("You are not the owner of this product!");
+        }
         if(update.getTitle() != null) {
             product.setTitle(update.getTitle());
         }
@@ -56,7 +66,8 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public List<Product> getAllByRetailer(UUID id) {
+    public List<Product> getAllByRetailer(String jwt) {
+        UUID id = jwtService.jwtToUUID(jwt);
         return productRepository.findAllByRetailer(id);
     }
 }

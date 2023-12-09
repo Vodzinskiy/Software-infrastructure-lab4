@@ -21,8 +21,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(product));
+    public ResponseEntity<Product> createProduct(@RequestBody Product product,
+                                                 @CookieValue("jwtToken") String jwtToken) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(product, jwtToken));
     }
 
     @GetMapping
@@ -37,13 +38,15 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteByID(@PathVariable UUID id) {
-        productService.deleteByID(id);
+    public void deleteByID(@PathVariable UUID id,
+                           @CookieValue("jwtToken") String jwtToken) {
+        productService.deleteByID(id, jwtToken);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Product> editByID(@PathVariable UUID id,
-                                            @RequestBody Product product) {
-        return ResponseEntity.ok(productService.editByID(id, product));
+                                            @RequestBody Product product,
+                                            @CookieValue("jwtToken") String jwtToken) {
+        return ResponseEntity.ok(productService.editByID(id, product, jwtToken));
     }
 }
