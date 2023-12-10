@@ -47,7 +47,7 @@ public class ProductService {
 
     public void deleteByID(UUID id, String jwt) {
         Product product = getByID(id);
-        if (product.getRetailerID() != jwtService.jwtToUUID(jwt)) {
+        if (!product.getRetailerID().equals(jwtService.jwtToUUID(jwt))) {
             throw new ForbiddenException("You are not the owner of this product!");
         }
         productRepository.deleteById(id);
@@ -55,7 +55,7 @@ public class ProductService {
 
     public Product editByID(UUID id, Product update, String jwt) {
         Product product = getByID(id);
-        if (product.getRetailerID() != jwtService.jwtToUUID(jwt)) {
+        if (!product.getRetailerID().equals(jwtService.jwtToUUID(jwt))) {
             throw new ForbiddenException("You are not the owner of this product!");
         }
         if(update.getTitle() != null) {
@@ -72,6 +72,6 @@ public class ProductService {
 
     public List<Product> getAllByRetailer(String jwt) {
         UUID id = jwtService.jwtToUUID(jwt);
-        return productRepository.findAllByRetailer(id);
+        return productRepository.findAllByRetailerID(id);
     }
 }

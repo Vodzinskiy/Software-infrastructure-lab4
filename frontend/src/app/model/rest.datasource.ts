@@ -46,6 +46,27 @@ export class RestDataSource {
   getRetailer(id: string) {
     return this.http.get(this.baseUrl + "retailer/" + id, {observe: 'response', withCredentials: true});
   }
+
+  getOrders() {
+    return this.http.get(this.baseUrl + "order", {observe: 'response',
+      withCredentials: true});
+  }
+
+  saveProduct(product: Product ) {
+    return this.http.post(this.baseUrl + "product", product, {observe: 'response', withCredentials: true})
+  }
+
+  getProductsForRetailer() {
+    return this.http.get(this.baseUrl + "retailer", {observe: 'response',      withCredentials: true});
+  }
+
+  deleteProduct(id: string) {
+    return this.http.delete(this.baseUrl + "product/" + id, {observe: 'response', withCredentials: true})
+  }
+
+  editProduct(id: string, product: Product) {
+    return this.http.patch<Retailer>(this.baseUrl + "product/" + id, product, {observe: 'response', withCredentials: true});
+  }
 }
 
 

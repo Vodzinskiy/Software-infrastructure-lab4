@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-between">
+  <div class="col-md-4 p-3 m-4 rounded flex-grow-1 flex-column">
+    <h3 class="text-center">Products</h3>
+    <form #form="ngForm" novalidate
+          (ngSubmit)="createProduct()" class="m-2 d-flex">
+      <div class="form-group m-3 flex-grow-1">
+        <input placeholder="title" class="form-control" #title="ngModel" name="title"
+               [(ngModel)]="product.title" required/>
+        <span *ngIf="submitted && title.invalid" class="text-danger">Please enter title</span>
+      </div>
+      <div class="form-group m-3">
+        <input placeholder="price" class="form-control" #price="ngModel" name="price"
+               [(ngModel)]="product.price" required/>
+        <span *ngIf="submitted && price.invalid" class="text-danger">Please enter price</span>
+      </div>
+      <button class="btn btn-primary m-3" type="submit">create</button>
+    </form>
+    <hr>
+
+    <form *ngFor="let p of products" #form="ngForm" novalidate
+          (ngSubmit)="edit(p.id, p.title, p.price)" class="m-2 d-flex">
+      <div class="form-group m-3 flex-grow-1">
+        <input placeholder="title" class="form-control" #title="ngModel" name="title"
+               [(ngModel)]="p.title" required/>
+        <span *ngIf="submitted && title.invalid" class="text-danger">Please enter title</span>
+      </div>
+      <div class="form-group m-3">
+        <input placeholder="price" class="form-control" #price="ngModel" name="price"
+               [(ngModel)]="p.price" required/>
+        <span *ngIf="submitted && price.invalid" class="text-danger">Please enter price</span>
+      </div>
+      <button class="btn btn-primary m-3" style="width: 70px" type="submit">edit</button>
+      <button class="btn btn-danger m-3" style="width: 70px" (click)="delete(p.id)">delete</button>
+    </form>
+
+  </div>
+
+  <div class="col-md-4 p-3 m-4 rounded flex-grow-1 flex-column">
+    <h3 class="text-center">Orders</h3>
+
+    <div *ngFor="let o of orders" class="col-md-4 p-3 px-5 m-4 rounded w-auto row" style="border: 1px solid #DADCE0;">
+      <h3 class="text-center">Customer information</h3>
+      <ul class="list-group">
+        <li class="list-group-item">ID: {{o.id}}</li>
+        <li class="list-group-item">Name: {{ o.fullName }}</li>
+        <li class="list-group-item">Birth Date: {{ o.birthDate }}</li>
+        <li class="list-group-item">Address: {{o.address}}</li>
+      </ul>
+      <h3 class="text-center">Purchases</h3>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Quantity</th>
+          <th>Title</th>
+          <th>Price</th>
+          <th>ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let p of o.products">
+          <td>{{p.quantity}}</td>
+          <td>{{p.product.title}}</td>
+          <td>{{p.product.price}}</td>
+          <td>{{p.product.id}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

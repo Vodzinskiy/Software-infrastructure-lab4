@@ -7,12 +7,13 @@ import {LoginComponent} from "./login.component";
 import {RestDataSource} from "../model/rest.datasource";
 import {SignupComponent} from "./signup.component";
 import {ProfileComponent} from "./profile.component";
+import {WorkspaceComponent} from "./workspace.component";
 
 
 
 @NgModule({
   imports: [ModelModule, BrowserModule, FormsModule, RouterModule],
-  declarations: [LoginComponent, SignupComponent, ProfileComponent],
+  declarations: [LoginComponent, SignupComponent, ProfileComponent, WorkspaceComponent],
   providers: [RestDataSource],
   exports: []
 })

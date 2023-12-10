@@ -11,6 +11,7 @@ import {AdminModule} from "./admin/admin.module";
 import {LoginComponent} from "./admin/login.component";
 import {SignupComponent} from "./admin/signup.component";
 import {ProfileComponent} from "./admin/profile.component";
+import {WorkspaceComponent} from "./admin/workspace.component";
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +37,9 @@ import {ProfileComponent} from "./admin/profile.component";
       },
       {
         path: "profile", component: ProfileComponent,
+      },
+      {
+        path: "workspace", component: WorkspaceComponent,
       },
 
       {path: "**", redirectTo: "/store"}
