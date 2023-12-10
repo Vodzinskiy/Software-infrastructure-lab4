@@ -10,6 +10,7 @@ import {StoreFirstGuard} from "./storeFirst.guard";
 import {AdminModule} from "./admin/admin.module";
 import {LoginComponent} from "./admin/login.component";
 import {SignupComponent} from "./admin/signup.component";
+import {ProfileComponent} from "./admin/profile.component";
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,10 @@ import {SignupComponent} from "./admin/signup.component";
       {
         path: "signup", component: SignupComponent,
       },
+      {
+        path: "profile", component: ProfileComponent,
+      },
+
       {path: "**", redirectTo: "/store"}
     ])],
   providers: [StoreFirstGuard],

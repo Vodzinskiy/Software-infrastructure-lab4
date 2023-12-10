@@ -20,7 +20,7 @@ export class SignupComponent {
     this.submitted = true;
     if (form.valid) {
       this.rest.signupRetailer(this.retailer).subscribe(
-        data => {
+        () => {
           this.router.navigate(['/store']);
         }
       );

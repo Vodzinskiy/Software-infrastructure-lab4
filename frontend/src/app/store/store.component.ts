@@ -1,20 +1,30 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Product} from "../model/product.model";
 import {ProductRepository} from "../model/product.repository";
 import {Cart} from "../model/cart.model";
 import {Router} from "@angular/router";
 
+
 @Component({
   selector: "store",
   templateUrl: "store.component.html"
 })
-export class StoreComponent {
+export class StoreComponent implements OnInit {
   selectedCategory: string | undefined;
   productsPerPage = 4;
   selectedPage = 1;
+  retailer: boolean = false;
 
-  constructor(private repository: ProductRepository, private cart: Cart, private router: Router) {
+  constructor(private repository: ProductRepository,
+              private cart: Cart,
+              private router: Router) {
   }
+
+  ngOnInit(): void {
+        if (document.cookie.split(';').some((item) => item.trim().startsWith('jwtToken='))) {
+          this.retailer = true
+        }
+    }
 
   get products(): Product[] {
     let pageIndex = (this.selectedPage - 1) * this.productsPerPage
@@ -39,11 +49,6 @@ export class StoreComponent {
     this.changePage(1);
   }
 
-  /*get pageNumbers(): number[] {
-    return Array(Math.ceil(this.repository
-      .getProducts(this.selectedCategory).length / this.productsPerPage))
-      .fill(0).map((x, i) => i + 1);
-  }*/
 
   get pageCount(): number {
     return Math.ceil(this.repository

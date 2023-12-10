@@ -35,6 +35,9 @@ export class RestDataSource {
       withCredentials: true});
   }
 
+  deleteRetailer() {
+    return this.http.delete(this.baseUrl + "retailer", {observe: 'response', withCredentials: true});
+  }
 }
 
 

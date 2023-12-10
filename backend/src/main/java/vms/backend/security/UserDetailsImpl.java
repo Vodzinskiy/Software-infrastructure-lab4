@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import vms.backend.entity.Retailer;
 
 import java.io.Serial;
+import java.time.LocalDate;
 import java.util.*;
 
 public class UserDetailsImpl implements UserDetails {
@@ -22,16 +23,20 @@ public class UserDetailsImpl implements UserDetails {
     @Getter
     private final String name;
 
+    @Getter
+    private final LocalDate birthDate;
+
     @JsonIgnore
     private String password;
 
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(UUID id, String email, String name, String password,
+    public UserDetailsImpl(UUID id, String email, String name, LocalDate birthDate, String password,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
         this.name = name;
+        this.birthDate = birthDate;
         this.password = password;
         this.authorities = authorities;
     }
@@ -44,6 +49,7 @@ public class UserDetailsImpl implements UserDetails {
                 retailer.getId(),
                 retailer.getEmail(),
                 retailer.getFullName(),
+                retailer.getBirthDate(),
                 retailer.getPassword(), authorities);
     }
 

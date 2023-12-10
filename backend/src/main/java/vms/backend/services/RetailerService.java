@@ -46,7 +46,6 @@ public class RetailerService {
                 retailer.getFullName(),
                 retailer.getEmail(),
                 encoder.encode(retailer.getPassword()),
-                retailer.getSex(),
                 retailer.getBirthDate());
         retailerRepository.save(createdRetailer);
 
@@ -88,9 +87,6 @@ public class RetailerService {
         }
         if(update.getEmail() != null) {
             retailer.setEmail(update.getEmail());
-        }
-        if(update.getSex() != null) {
-            retailer.setSex(update.getSex());
         }
         if(update.getBirthDate() != null) {
             retailer.setBirthDate(update.getBirthDate());

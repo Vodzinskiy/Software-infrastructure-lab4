@@ -6,12 +6,13 @@ import {RouterModule} from "@angular/router";
 import {LoginComponent} from "./login.component";
 import {RestDataSource} from "../model/rest.datasource";
 import {SignupComponent} from "./signup.component";
+import {ProfileComponent} from "./profile.component";
 
 
 
 @NgModule({
   imports: [ModelModule, BrowserModule, FormsModule, RouterModule],
-  declarations: [LoginComponent, SignupComponent],
+  declarations: [LoginComponent, SignupComponent, ProfileComponent],
   providers: [RestDataSource],
   exports: []
 })

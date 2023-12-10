@@ -21,6 +21,7 @@ public class JwtService {
         if (principal instanceof UserDetailsImpl userPrincipal) {
             Map<String, Object> claims = new HashMap<>();
             claims.put("name", userPrincipal.getName());
+            claims.put("birthDate", userPrincipal.getBirthDate().toString());
             return Jwts.builder()
                     .setSubject(userPrincipal.getUsername())
                     .setId(userPrincipal.getId().toString())
