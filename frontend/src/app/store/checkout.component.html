@@ -36,9 +36,9 @@ Please enter your address
 
       <div class="form-group">
         <label>Birth date</label>
-        <input class="form-control" #address="ngModel" name="birthDate"
+        <input class="form-control" #birthDate="ngModel" name="birthDate"
                [(ngModel)]="order.birthDate" type="date" required/>
-        <span *ngIf="submitted && address.invalid" class="text-danger">
+        <span *ngIf="submitted && birthDate.invalid" class="text-danger">
 Please enter your Birth date
 </span>
       </div>
