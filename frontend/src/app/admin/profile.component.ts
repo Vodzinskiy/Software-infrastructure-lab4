@@ -23,7 +23,8 @@ export class ProfileComponent implements OnInit{
   submitProfile(form: NgForm) {
     this.submitted = true;
     if (form.valid) {
-
+      this.rest.editRetailer(this.retailer).subscribe(() =>
+        this.router.navigate(['/store']))
       this.submitted = false;
     }
   }
@@ -39,9 +40,13 @@ export class ProfileComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.retailer.fullName = this.decodeJwt()['name']
-    this.retailer.email = this.decodeJwt()['sub']
-    this.retailer.birthDate = this.decodeJwt()['birthDate']
+    this.rest.getRetailer(this.decodeJwt()['jti']).subscribe(r => {
+      let data = JSON.parse(JSON.stringify(r.body))
+      this.retailer.fullName = data.fullName
+      this.retailer.email = data.email
+      this.retailer.birthDate = data.birthDate
+    })
+
   }
 
   decodeJwt(): any {
@@ -51,6 +56,4 @@ export class ProfileComponent implements OnInit{
       console.error('Error decoding or verifying token:', error);
     }
   }
-
-
 }

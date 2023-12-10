@@ -21,7 +21,8 @@ export class SignupComponent {
     if (form.valid) {
       this.rest.signupRetailer(this.retailer).subscribe(
         () => {
-          this.router.navigate(['/store']);
+          this.rest.loginRetailer(this.retailer).subscribe(() =>
+            this.router.navigate(['/store']))
         }
       );
       this.submitted = false;

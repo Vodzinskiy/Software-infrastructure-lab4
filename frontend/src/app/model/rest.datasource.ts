@@ -35,8 +35,16 @@ export class RestDataSource {
       withCredentials: true});
   }
 
+  editRetailer(retailer: Retailer) {
+    return this.http.patch<Retailer>(this.baseUrl + "retailer", retailer, {observe: 'response', withCredentials: true});
+  }
+
   deleteRetailer() {
     return this.http.delete(this.baseUrl + "retailer", {observe: 'response', withCredentials: true});
+  }
+
+  getRetailer(id: string) {
+    return this.http.get(this.baseUrl + "retailer/" + id, {observe: 'response', withCredentials: true});
   }
 }
 

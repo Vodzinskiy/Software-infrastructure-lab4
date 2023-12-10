@@ -11,6 +11,7 @@ import vms.backend.services.ProductService;
 import vms.backend.services.RetailerService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/retailer")
@@ -50,5 +51,11 @@ public class RetailerController {
     public ResponseEntity<Retailer> editRetailer(@RequestBody Retailer retailer,
                                                  @CookieValue("jwtToken") String jwtToken) {
         return ResponseEntity.ok(retailerService.editRetailer(retailer, jwtToken));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Retailer> getRetailer(@PathVariable UUID id,
+                                                @CookieValue("jwtToken") String jwtToken) {
+        return ResponseEntity.ok(retailerService.getRetailerByID(id, jwtToken));
     }
 }

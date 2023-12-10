@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vms.backend.entity.Retailer;
 import vms.backend.exception.AlreadyExistsException;
+import vms.backend.exception.ForbiddenException;
 import vms.backend.exception.NotFoundException;
 import vms.backend.repository.RetailerRepository;
 
@@ -72,6 +73,14 @@ public class RetailerService {
         }
         return retailer.get();
     }
+
+    public Retailer getRetailerByID(UUID id, String jwt) {
+       if (!jwtService.jwtToUUID(jwt).equals(id)) {
+           throw new ForbiddenException("");
+       }
+       return getByID(id);
+    }
+
 
 
     public void deleteByID(String jwt) {
