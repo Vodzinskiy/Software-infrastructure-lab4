@@ -1,20 +1,18 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Product} from "./product.model";
 import {Order} from "./order.model";
 import {Retailer} from "./retailer.model";
+import {env} from "../../environments/environments";
 
-const PROTOCOL = "http";
-const PORT = 3500;
 
 @Injectable()
 export class RestDataSource {
   baseUrl: string;
 
-
   constructor(private http: HttpClient) {
-    this.baseUrl = `http://localhost:8080/`;
+    this.baseUrl = env.BACKEND_URL;
   }
 
   getProducts(): Observable<Product[]> {
