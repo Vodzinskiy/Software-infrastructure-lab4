@@ -13,6 +13,7 @@ import vms.backend.entity.Retailer;
 import vms.backend.exception.AlreadyExistsException;
 import vms.backend.exception.ForbiddenException;
 import vms.backend.exception.NotFoundException;
+import vms.backend.repository.ProductRepository;
 import vms.backend.repository.RetailerRepository;
 
 import java.util.Optional;
@@ -22,6 +23,7 @@ import java.util.UUID;
 public class RetailerService {
 
     private final RetailerRepository retailerRepository;
+    private final ProductRepository productRepository;
     private final PasswordEncoder encoder;
 
     private final AuthenticationManager authenticationManager;
@@ -30,8 +32,9 @@ public class RetailerService {
 
 
     @Autowired
-    public RetailerService(RetailerRepository retailerRepository, PasswordEncoder encoder, AuthenticationManager authenticationManager, JwtService jwtService) {
+    public RetailerService(RetailerRepository retailerRepository, ProductRepository productRepository, PasswordEncoder encoder, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.retailerRepository = retailerRepository;
+        this.productRepository = productRepository;
         this.encoder = encoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
@@ -87,6 +90,7 @@ public class RetailerService {
         UUID id = jwtService.jwtToUUID(jwt);
         getByID(id);
         retailerRepository.deleteById(id);
+        productRepository.deleteByRetailerID(id);
     }
 
     public Retailer editRetailer(Retailer update, String jwt) {

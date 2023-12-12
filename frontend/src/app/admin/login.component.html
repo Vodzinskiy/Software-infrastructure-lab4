@@ -1,8 +1,7 @@
-<div class="row justify-content-center align-content-center vh-100">
+<div class="container-fluid row justify-content-center align-content-center vh-100">
   <div class="col-md-3 p-5 rounded" style="border: 1px solid #DADCE0;">
     <h3 class="text-center mb-4">Login</h3>
-    <form #form="ngForm" novalidate
-          (ngSubmit)="submitLogin(form)" class="m-2">
+    <form #form="ngForm" novalidate class="m-2">
 
       <div class="form-group my-3">
         <label>Email</label>
@@ -24,7 +23,7 @@ Please enter your password
       <span style="color: red">{{textError}}</span>
       <div class="d-flex justify-content-between">
         <button class="btn btn-lg btn-link" routerLink="/signup">Sign up</button>
-        <button class="btn btn-lg btn-primary" type="submit">Login</button>
+        <button class="btn btn-lg btn-primary" (click)="submitLogin(form)">Login</button>
       </div>
 
     </form>

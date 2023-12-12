@@ -1,9 +1,7 @@
-<div class="row justify-content-center align-content-center vh-100">
+<div class="container-fluid row justify-content-center align-content-center vh-100">
   <div class="col-md-3 p-5 rounded" style="border: 1px solid #DADCE0;">
     <h3 class="text-center mb-4">Profile</h3>
-    <form #form="ngForm" novalidate
-          (ngSubmit)="submitProfile(form)" class="m-2">
-
+    <form #form="ngForm" novalidate class="m-2">
       <div class="form-group my-3">
         <label>Full name</label>
         <input class="form-control" #fullName="ngModel" name="fullName"
@@ -38,12 +36,10 @@ Please enter your Birth date
       </div>
       <span style="color: red">{{textError}}</span>
       <div class="d-flex justify-content-between">
-
-        <button class="btn btn-lg btn-primary" style="width: 100px" type="submit">Save</button>
+        <button class="btn btn-lg btn-primary" style="width: 100px" (click)="submitProfile(form)">Save</button>
         <button class="btn btn-lg btn-secondary" style="width: 100px" (click)="logout()">Logout</button>
         <button class="btn btn-lg btn-danger" style="width: 100px" (click)="deleteProfile()">Delete</button>
       </div>
-
     </form>
   </div>
 </div>

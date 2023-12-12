@@ -30,8 +30,9 @@ export class ProfileComponent implements OnInit{
   }
 
   deleteProfile() {
-    this.rest.deleteRetailer().subscribe(() =>
-      this.logout())
+    this.rest.deleteRetailer().subscribe({
+      next: () => this.logout()
+    })
   }
 
   logout() {
