@@ -32,6 +32,10 @@ public class Retailer {
     @Column(columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDate birthDate;
 
+    @Lob
+    @Column
+    private byte[] photo;
+
     public Retailer(UUID id, String fullName, String email, String password, LocalDate birthDate) {
         this.id = id;
         this.fullName = fullName;

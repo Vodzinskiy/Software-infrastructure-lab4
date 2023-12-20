@@ -17,27 +17,42 @@
     </form>
     <hr>
 
-    <form *ngFor="let p of products" #form="ngForm" novalidate
-          (ngSubmit)="edit(p.id, p.title, p.price)" class="m-2 d-flex">
-      <div class="form-group m-3 flex-grow-1">
-        <input placeholder="title" class="form-control" #title="ngModel" name="title"
+    <form *ngFor="let p of products" novalidate class="m-2 d-flex">
+      <div class="form-group my-3 d-flex row justify-content-center">
+        <label for="{{p.id}}" class="d-flex" style="position: relative">
+          <img [src]="p.productPhoto ?? 'assets/no_photo.jpg'"
+               class="img-fluid"
+               style="width: 100px; height: 100px;  object-fit: cover; border-radius: 10px;"
+               alt="Зображення">
+          <button type="button" class="btn-close position-absolute border-white rounded-circle"
+                  (click)="deleteImg(p.id, fileInput)"  style="background-color: white; top: -10px; right: 0;"></button>
+        </label>
+
+        <input id="{{p.id}}"
+               type="file"
+               style="display: none"
+               accept=".jpeg, .png, .gif"
+               (change)="onFileSelected($event, p.id)"
+               #fileInput>
+      </div>
+
+      <div class="form-group m-3 flex-grow-1 " style="display: flex">
+        <input placeholder="title" class="form-control" style="align-self: center" #title="ngModel" name="title"
                [(ngModel)]="p.title" required/>
         <span *ngIf="submitted && title.invalid" class="text-danger">Please enter title</span>
       </div>
-      <div class="form-group m-3">
-        <input placeholder="price" class="form-control" #price="ngModel" name="price"
+      <div class="form-group m-3" style="max-width: 90px; display: flex">
+        <input placeholder="price" class="form-control" style="align-self: center" #price="ngModel" name="price"
                [(ngModel)]="p.price" required/>
         <span *ngIf="submitted && price.invalid" class="text-danger">Please enter price</span>
       </div>
-      <button class="btn btn-primary m-3" style="width: 70px" type="submit">edit</button>
-      <button class="btn btn-danger m-3" style="width: 70px" (click)="delete(p.id)">delete</button>
+      <button class="btn btn-primary m-3" style="width: 70px; align-self: center" (click)="edit(p.id, p.title, p.price)">edit</button>
+      <button class="btn btn-danger m-3" style="width: 70px; align-self: center" (click)="delete(p.id)">delete</button>
     </form>
-
   </div>
 
   <div class="col-md-4 p-3 m-4 rounded flex-grow-1 flex-column">
     <h3 class="text-center">Orders</h3>
-
     <div *ngFor="let o of orders" class="col-md-4 p-3 px-5 m-4 rounded w-auto row" style="border: 1px solid #DADCE0;">
       <h3 class="text-center">Customer information</h3>
       <ul class="list-group">

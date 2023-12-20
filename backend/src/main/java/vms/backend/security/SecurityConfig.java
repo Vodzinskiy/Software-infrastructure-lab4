@@ -83,9 +83,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/product").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/order", "/retailer").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/order").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/product/**", "/retailer").authenticated()
-                        .requestMatchers(HttpMethod.PATCH, "/product/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/product/**", "/retailer").authenticated()
                         .anyRequest().permitAll()
                 );
 

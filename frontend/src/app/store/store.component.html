@@ -2,15 +2,15 @@
   <div class="row">
     <div class="bg-dark text-white p-2 align-items-center">
       <span class="navbar-brand">STORE</span>
-      <div *ngIf="!retailer" class="float-end">
+      <div *ngIf="!isRetailer" class="float-end">
         <button class="btn btn-primary mx-3 py-1" routerLink="/login">login</button>
       </div>
-      <div *ngIf="retailer" class="float-end">
+      <div *ngIf="isRetailer" class="float-end">
         <button class="btn mx-3 py-1 text-white" routerLink="/profile">
           <i class="fa fa-user"></i>
         </button>
       </div>
-      <div *ngIf="retailer" class="float-end">
+      <div *ngIf="isRetailer" class="float-end">
         <button class="btn mx-3 py-1 text-white" routerLink="/workspace">
           workspace
         </button>
@@ -19,6 +19,25 @@
     </div>
   </div>
   <div class="row text-white justify-content-center">
+    <div *ngIf="retailerPage" class="col-9 p-2 text-dark">
+      <label class="d-flex justify-content-center">
+        <img [src]="retailerPhoto ?? 'assets/default_retailer.jpg'"
+             class="img-fluid"
+             style="width: 200px; height: 200px;  object-fit: cover; border-radius: 10px"
+             alt="Зображення профілю">
+      </label>
+      <div class="col-5 p-2 justify-content-center container-fluid" style="min-width: 500px;">
+        <div class="form-group my-3">
+          <label>Full name</label>
+          <input class="form-control" [(ngModel)]="retailer.fullName" [disabled]="true" style="background-color: white;"/>
+        </div>
+        <div class="form-group my-3">
+          <label>Email</label>
+          <input class="form-control" [(ngModel)]="retailer.email" [disabled]="true" style="background-color: white;"/>
+        </div>
+      </div>
+
+    </div>
     <div class="col-9 p-2 text-dark">
       <div class="dropdown m-1 p-1 float-end">
         <select class="form-select" [(ngModel)]="sort" (change)="onSortChange()">
@@ -29,19 +48,30 @@
       </div>
     </div>
     <div class="col-9 p-2 text-dark">
-      <div *ngFor="let product of products" class="card m-1 p-1 bg-light">
-        <h4>
-          {{product.title}}
-          <span class="badge rounded-pill bg-primary" style="float:right">
+      <div *ngFor="let product of products" class="card m-1 p-1 bg-light d-flex flex-row">
+        <div style="margin-right: 10px">
+          <label class="d-flex" style="position: relative">
+            <img [src]="product.productPhoto ??'assets/no_photo.jpg'"
+                 class="img-fluid"
+                 style="width: 100px; height: 100px;  object-fit: cover; border-radius: 10px;"
+                 alt="Зображення">
+          </label>
+        </div>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+          <h4>
+            {{product.title}}
+            <span class="badge rounded-pill bg-primary" style="float:right">
             {{ product.price | currency:"USD":"symbol":"2.2-2" }}
           </span>
-        </h4>
-        <div class="card-text bg-white p-1">
-          Retailer: {{product.retailer}}
-          <button class="btn btn-success btn-sm float-end"
-                  (click)="addProductToCart(product)">
-            Add To Cart
-          </button>
+          </h4>
+          <div class="card-text bg-white p-1">
+            Retailer:
+            <a href="/retailer/{{product.retailerID}}">{{product.retailer}}</a>
+            <button class="btn btn-success btn-sm float-end"
+                    (click)="addProductToCart(product)">
+              Add To Cart
+            </button>
+          </div>
         </div>
       </div>
       <div class="form-inline float-start mr-1">

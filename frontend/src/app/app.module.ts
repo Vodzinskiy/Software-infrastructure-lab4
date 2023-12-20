@@ -41,6 +41,9 @@ import {WorkspaceComponent} from "./admin/workspace.component";
       {
         path: "workspace", component: WorkspaceComponent,
       },
+      {
+        path: "retailer/:id", component: StoreComponent,
+      },
 
       {path: "**", redirectTo: "/store"}
     ])],

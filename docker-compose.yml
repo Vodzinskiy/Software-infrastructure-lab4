@@ -11,7 +11,9 @@ services:
       - network-backend   
   backend: 
     build: ./backend
-    container_name: backend   
+    container_name: backend
+    volumes:
+      - D:\KPI\7_semester\IPZ\lab5:/app/images
     depends_on: 
       - mongo
       - postgres

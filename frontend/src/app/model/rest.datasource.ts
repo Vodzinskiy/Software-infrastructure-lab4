@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Product} from "./product.model";
 import {Order} from "./order.model";
@@ -24,13 +24,17 @@ export class RestDataSource {
   }
 
   loginRetailer(retailer: Retailer) {
-    return this.http.post<Retailer>(this.baseUrl + "retailer/login", retailer, {observe: 'response',
-      withCredentials: true});
+    return this.http.post<Retailer>(this.baseUrl + "retailer/login", retailer, {
+      observe: 'response',
+      withCredentials: true
+    });
   }
 
   signupRetailer(retailer: Retailer) {
-    return this.http.post<Retailer>(this.baseUrl + "retailer/signup", retailer, {observe: 'response',
-      withCredentials: true});
+    return this.http.post<Retailer>(this.baseUrl + "retailer/signup", retailer, {
+      observe: 'response',
+      withCredentials: true
+    });
   }
 
   editRetailer(retailer: Retailer) {
@@ -46,16 +50,18 @@ export class RestDataSource {
   }
 
   getOrders() {
-    return this.http.get(this.baseUrl + "order", {observe: 'response',
-      withCredentials: true});
+    return this.http.get(this.baseUrl + "order", {
+      observe: 'response',
+      withCredentials: true
+    });
   }
 
-  saveProduct(product: Product ) {
+  saveProduct(product: Product) {
     return this.http.post(this.baseUrl + "product", product, {observe: 'response', withCredentials: true})
   }
 
   getProductsForRetailer() {
-    return this.http.get(this.baseUrl + "retailer", {observe: 'response',      withCredentials: true});
+    return this.http.get(this.baseUrl + "retailer", {observe: 'response', withCredentials: true});
   }
 
   deleteProduct(id: string) {
@@ -63,7 +69,39 @@ export class RestDataSource {
   }
 
   editProduct(id: string, product: Product) {
-    return this.http.patch<Retailer>(this.baseUrl + "product/" + id, product, {observe: 'response', withCredentials: true});
+    return this.http.patch<Retailer>(this.baseUrl + "product/" + id, product, {
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  deleteRetailerPhoto() {
+    return this.http.delete(this.baseUrl + "retailer/photo", {observe: 'response', withCredentials: true});
+  }
+
+  saveRetailerPhoto(form: FormData) {
+    return this.http.post(this.baseUrl + "retailer/photo", form, {observe: 'response', withCredentials: true});
+  }
+
+  getRetailerPhoto() {
+    return this.http.get(this.baseUrl + "retailer/photo", {responseType: 'blob', withCredentials: true})
+  }
+
+  saveProductImg(form: FormData, id: string) {
+    return this.http.post(this.baseUrl + "product/img/" + id, form, {observe: 'response', withCredentials: true});
+  }
+
+  deleteProductImg(id: string) {
+    return this.http.delete(this.baseUrl + "product/img/" + id, {observe: 'response', withCredentials: true})
+  }
+
+  getAllImages(id: string | null | undefined){
+    if (id === null || id === undefined) {
+      id = ""
+    }
+    let params = new HttpParams();
+    params = params.append('id', id);
+    return this.http.get(this.baseUrl + "product/img", {params: params, observe: 'response', withCredentials: true})
   }
 }
 

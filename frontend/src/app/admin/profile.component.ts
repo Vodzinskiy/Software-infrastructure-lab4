@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {Retailer} from "../model/retailer.model";
 import {Router} from "@angular/router";
 import {RestDataSource} from "../model/rest.datasource";
@@ -14,6 +14,9 @@ export class ProfileComponent implements OnInit{
   submitted: boolean = false;
   retailer: Retailer = new Retailer();
   textError: string = "";
+  retailerPhoto: any;
+
+  @ViewChild('fileInput') fileInput: any
 
   constructor(private router: Router,
               private rest: RestDataSource,
@@ -46,8 +49,18 @@ export class ProfileComponent implements OnInit{
       this.retailer.fullName = data.fullName
       this.retailer.email = data.email
       this.retailer.birthDate = data.birthDate
+      this.rest.getRetailerPhoto().subscribe(data => {
+        if (data.size != 0) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            this.retailerPhoto = reader.result;
+          };
+          reader.readAsDataURL(data);
+        } else {
+          this.retailerPhoto = 'assets/default_retailer.jpg';
+        }
+      })
     })
-
   }
 
   decodeJwt(): any {
@@ -56,5 +69,25 @@ export class ProfileComponent implements OnInit{
     } catch (error) {
       console.error('Error decoding or verifying token:', error);
     }
+  }
+
+  onFileSelected(event: any) {
+    let formData: FormData = new FormData();
+    formData.append("file", event.target.files[0]);
+    this.rest.saveRetailerPhoto(formData).subscribe(() => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        this.retailerPhoto = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+      }
+    );
+  }
+
+  deletePhoto() {
+    this.rest.deleteRetailerPhoto().subscribe(() => {
+      this.retailerPhoto = 'assets/default_retailer.jpg';
+      this.fileInput.nativeElement.value = '';
+    })
   }
 }
