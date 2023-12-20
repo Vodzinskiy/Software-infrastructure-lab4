@@ -103,6 +103,10 @@ export class RestDataSource {
     params = params.append('id', id);
     return this.http.get(this.baseUrl + "product/img", {params: params, observe: 'response', withCredentials: true})
   }
+
+  completeOrder(id: string) {
+    return this.http.delete(this.baseUrl + "order/" + id, {observe: 'response', withCredentials: true})
+  }
 }
 
 

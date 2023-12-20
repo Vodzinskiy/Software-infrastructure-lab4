@@ -8,6 +8,7 @@ import vms.backend.entity.Order;
 import vms.backend.services.OrderService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/order")
@@ -30,4 +31,9 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getAllOrdersForRetailer(jwtToken));
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeOrder(@PathVariable UUID id) {
+        orderService.deleteOrderById(id);
+    }
 }

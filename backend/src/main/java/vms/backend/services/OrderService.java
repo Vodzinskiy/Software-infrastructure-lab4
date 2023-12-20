@@ -8,6 +8,7 @@ import vms.backend.repository.OrderRepository;
 import vms.backend.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -55,5 +56,12 @@ public class OrderService {
                                         id.equals(product.getProduct().getRetailerID()))
                                 .collect(Collectors.toList())))
                 .collect(Collectors.toList());
+    }
+
+    public void deleteOrderById(UUID id) {
+        Optional<Order> order = orderRepository.findById(id);
+        if (order.isPresent()) {
+            orderRepository.deleteById(id);
+        }
     }
 }

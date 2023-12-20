@@ -114,6 +114,13 @@ export class WorkspaceComponent implements OnInit {
       }
     });
   }
+
+  completeOrder(id: string | undefined) {
+    if (id) {
+      this.orders = this.orders.filter((order) => order.id !== id);
+      this.rest.completeOrder(id).subscribe()
+    }
+  }
 }
 interface Image {
   id: string;

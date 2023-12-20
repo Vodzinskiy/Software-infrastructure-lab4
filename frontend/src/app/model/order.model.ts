@@ -3,7 +3,7 @@ import {Cart, CartLine} from "./cart.model";
 
 @Injectable()
 export class Order {
-  public id?: number;
+  public id?: string;
   public fullName?: string;
   public address?: string;
   public birthDate?: string;
